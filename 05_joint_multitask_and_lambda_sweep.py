@@ -1,11 +1,6 @@
 """
 05_joint_multitask_and_lambda_sweep.py
 
-Consolidates the backbone-level fix: training POSTER-Var jointly with an
-auxiliary demographic-classification loss (weighted by lambda), then
-re-running the demographic-conditioning comparison on the resulting
-"recovered" features.
-
 Covers:
   1. RafDbDemogDataset loaders + JointModel (emotion head + auxiliary
      race/gender/age heads off the same 768-d feature).
