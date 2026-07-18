@@ -1,10 +1,6 @@
 """
 common_utils.py
 
-Shared paths, dataset classes, and model helper definitions used by every
-other script in this repo. Consolidated (not modified) from the
-B.R.I.D.G.E.R. V2 Colab notebook's repeated "definitions" cells.
-
 Import this module first in any of the other scripts, e.g.:
 
     from common_utils import *
