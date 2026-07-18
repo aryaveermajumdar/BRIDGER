@@ -117,8 +117,6 @@ Each script is organized as a sequence of top-to-bottom cells (preserved from th
 Full quantitative results, ablation tables, and statistical comparisons are reported in the accompanying paper. Running the analysis scripts regenerates the underlying figures and result tables locally as CSV and PNG files in your configured cache directory.
 
 ## Acknowledgments
-
-- Research mentorship provided via Polygence.
 - Backbone architecture and pretrained weights from the [POSTER-Var](https://github.com/lg2578/poster-var) repository, licensed under Apache License 2.0. That code is downloaded at runtime rather than redistributed in this repository; see the original repository for its full license terms.
 - RAF-DB and AffectNet+ dataset creators and maintainers.
 
