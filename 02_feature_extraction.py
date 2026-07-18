@@ -1,9 +1,6 @@
 """
 02_feature_extraction.py
 
-Consolidates every feature-caching cell from the notebook that isn't tied to
-a specific downstream experiment:
-
   1. Extract the 768-d SE-gated POSTER-Var feature (hooked at VIT.se_block)
      for train/val/test and cache to Drive.
   2. Extract pristine IR50 (face-recognition, pre-expression-training)
