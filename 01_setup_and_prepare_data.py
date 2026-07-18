@@ -1,11 +1,6 @@
 """
 01_setup_and_prepare_data.py
 
-Consolidates the "FRESH MASTER SETUP CELL", the checkpoint verification /
-overwrite cells, and the RAF-DB manual-annotation parsing cells from the
-B.R.I.D.G.E.R. V2 notebook. Run this once per Colab session before any of
-the other scripts.
-
 Covers:
   1. Mount Drive, download the poster-var repo and IR50/MobileFaceNet weights
   2. Patch hardcoded Windows paths in the repo
