@@ -117,16 +117,18 @@ Each script is organized as a sequence of top-to-bottom cells (preserved from th
 Full quantitative results, ablation tables, and statistical comparisons are reported in the accompanying paper. Running the analysis scripts regenerates the underlying figures and result tables locally as CSV and PNG files in your configured cache directory.
 
 ## Acknowledgments
-- Backbone architecture and pretrained weights from the [POSTER-Var](https://github.com/lg2578/poster-var) repository.
+
+- Research mentorship provided via Polygence.
+- Backbone architecture and pretrained weights from the [POSTER-Var](https://github.com/lg2578/poster-var) repository, licensed under Apache License 2.0. That code is downloaded at runtime rather than redistributed in this repository; see the original repository for its full license terms.
 - RAF-DB and AffectNet+ dataset creators and maintainers.
 
 ## License
 
-This code is intended for release under the MIT License. Add a `LICENSE` file to the repository root with the standard MIT text and your name and year to formalize this. The datasets used with this code carry their own separate licenses and access terms, set by their respective creators, and are not covered by this repository's license.
+This repository's original code is released under the MIT License, see `LICENSE`. This covers the code in this repository only. The POSTER-Var backbone it depends on is separately licensed under Apache License 2.0 by its original authors, and the RAF-DB and AffectNet+ datasets carry their own separate access terms set by their respective creators. Neither is covered by this repository's MIT license.
 
 ## Contact
 
 Aryaveer Majumdar
 aryaveermajumdar@gmail.com
 
-Questions, issues, and pull requests are welcome via the repository's issue tracker.x
+Questions, issues, and pull requests are welcome via the repository's issue tracker.
