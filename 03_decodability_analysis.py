@@ -1,9 +1,6 @@
 """
 03_decodability_analysis.py
 
-Consolidates every "how decodable is race/gender/age from these features"
-analysis cell:
-
   1. decode_race() — 3-point decodability comparison (pristine IR50, IR50
      stream inside POSTER-Var, POSTER-Var final feature), 5 seeds each.
   2. Weighted demographic classifier trained on cached POSTER-Var features,
