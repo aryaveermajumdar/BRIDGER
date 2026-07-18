@@ -1,8 +1,6 @@
 """
 06_figures.py
 
-Consolidates the three matplotlib figure-generation cells from the notebook:
-
   1. fig1_architecture — schematic of the B.R.I.D.G.E.R. backbone-level fix
      (auxiliary demographic loss) + staged demographic-conditioned head.
   2. fig2_decodability_pipeline — race decodability bar chart across the
