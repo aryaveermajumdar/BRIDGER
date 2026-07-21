@@ -2,7 +2,7 @@
 
 Code for training, auditing, and statistically evaluating a demographic-conditioned facial emotion recognition (FER) model on RAF-DB, built on a POSTER-Var backbone (IR50 + MobileFaceNet + cross-attention pyramid fusion).
 
-This repository accompanies the paper submitted to *IEEE Transactions on Affective Computing*. It contains the pipeline used to produce the models, figures, and statistical results reported there: dataset preparation, demographic annotation parsing, model training, decodability auditing, and significance testing.
+This repository contains the full pipeline behind the project: dataset preparation, demographic annotation parsing, model training, decodability auditing, and significance testing, plus the code used to produce every figure and statistical result.
 
 ## Overview
 
@@ -31,14 +31,14 @@ RAF-DB is a third-party resource with its own access terms. This repository does
 | `03_decodability_analysis.py` | A 3-point race decodability comparison across the pipeline (pristine IR50, IR50 stream inside POSTER-Var, final POSTER-Var feature), weighted and unweighted demographic classifiers with per-group accuracy and confusion matrices, a 10-seed paired comparison of pristine-IR50 versus POSTER-Var decodability, and a linear probe of emotion accuracy directly on pristine IR50 features for reference. |
 | `04_grouping_and_shrinkage_experiments.py` | The `ShrinkageEmbedding` / `ShrinkageConditionedHead` classes and their 3-stage training protocol, the main mode-switchable `Head` (`none` / `hard_fine` / `hard_best` / `shrinkage`) used for the primary 20-seed comparison sweep, paired t-test/Wilcoxon/Holm-corrected statistical comparison of that sweep, and sparsity-sweep analysis helpers. Also contains an inactive (preserved, not executed) brute-force race/age partition search. |
 | `05_joint_multitask_and_lambda_sweep.py` | `JointModel` (the POSTER-Var backbone plus auxiliary race/gender/age heads), `run_lambda_sweep()` which trains it across several loss-weighting lambda values, evaluation of the saved lambda=0.1 checkpoint on the test set overall and per race group, re-extraction of the 768-d feature from that recovered model with demographics re-attached, and a `none` vs `hard_fine` conditioning comparison on the recovered features with the full statistical battery described above. Imports `Head` and related functions from `04` at runtime via `importlib`, see Usage below. |
-| `06_figures.py` | The three paper figures: an architecture schematic, a bar chart of race decodability across the pipeline stages, and a bar chart of the conditioning effect (macro race Neutral recall, no conditioning vs `hard_fine`, collapsed vs recovered features). |
+| `06_figures.py` | The three project figures: an architecture schematic, a bar chart of race decodability across the pipeline stages, and a bar chart of the conditioning effect (macro race Neutral recall, no conditioning vs `hard_fine`, collapsed vs recovered features). |
 | `model.py` | Not yet in the repository as of this README. Consolidates the model class definitions above (`DemogClf`, `DemogClassifier`, `ShrinkageEmbedding`, `ShrinkageConditionedHead`, `Head`, `JointModel`, and related helpers) into one importable file, pulled from `common_utils.py`, `04`, and `05` with no logic changes. |
 | `inference.py` | Not yet in the repository as of this README. New code, not part of the original notebooks: lets a reader run the trained model on a single image or a folder of images without executing the full pipeline. |
 
 ## Requirements
 
 - Python 3.9+
-- A CUDA-capable GPU is strongly recommended; the pipeline was developed and run on a Google Colab GPU runtime.
+- A CUDA-capable GPU is strongly recommended.
 
 Core dependencies, confirmed against actual imports in this repository:
 
@@ -109,23 +109,20 @@ Each script is organized as a sequence of top-to-bottom cells preserved from the
 
 ## Results
 
-Full quantitative results and statistical comparisons are reported in the accompanying paper. Running the analysis scripts regenerates the underlying result tables and figures locally as CSV, PNG, and PDF files in your configured cache directory.
+Full quantitative results and statistical comparisons are written up separately from this repository. Running the analysis scripts regenerates the underlying result tables and figures locally as CSV, PNG, and PDF files in your configured cache directory.
 
 ## Citation
 
 If you use this code, please cite:
 
 ```bibtex
-@article{bridger,
-  title   = {Diagnosing and Reversing Demographic Signal Collapse in Facial Expression Recognition},
-  author  = {Aryaveer Majumdar, Micah Vinet},
-  journal = {IEEE Transactions on Affective Computing},
-  year    = {2026},
-  note    = {Under review}
+@misc{bridger,
+  title  = {Diagnosing and Reversing Demographic Signal Collapse in Facial Expression Recognition},
+  author = {Majumdar, Aryaveer and Vinet, Micah},
+  year   = {2026},
+  url    = {https://github.com/aryaveermajumdar/BRIDGER}
 }
 ```
-
-(citation details will be finalized upon publication)
 
 ## Acknowledgments
 
