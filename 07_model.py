@@ -1,24 +1,3 @@
-"""
-model.py
-
-Consolidated model architecture definitions for BRIDGER. Every class here is
-extracted from the existing pipeline scripts (common_utils.py,
-04_grouping_and_shrinkage_experiments.py, 05_joint_multitask_and_lambda_sweep.py)
-with no logic changes, just gathered into one place so an architecture can be
-imported and reused (e.g. by inference.py) without importing an entire
-pipeline stage script as a module.
-
-Import this after common_utils, e.g.:
-    from common_utils import *
-    from model import *
-
-NOTE FOR REVIEWER: these class bodies are copied verbatim from the pipeline
-scripts named above. If those scripts are ever edited independently, this
-file will drift out of sync unless updated in parallel. Once you've verified
-this file is correct, consider having 04 and 05 import their model classes
-from here instead of redefining them inline, that removes the duplication.
-"""
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
