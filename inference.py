@@ -1,65 +1,3 @@
-"""
-inference.py
-
-Run BRIDGER on a single image (or a folder of images) without executing the
-full training/analysis pipeline. This file is new, it does not exist in the
-original Colab notebooks, it was written to fill a real gap: none of
-01 through 06 take a raw image in and return a prediction out.
-
-Three modes, matched to what the pipeline scripts actually produce and save
-to disk:
-
-  emotion     Plain fine-tuned POSTER-Var backbone -> 7-way emotion only.
-              Loads EMA_CHECKPOINT_PATH (override with --checkpoint). This
-              is the only mode whose checkpoint is guaranteed to exist after
-              running the pipeline as shipped.
-
-  joint       JointModel (backbone + auxiliary race/gender/age heads) ->
-              emotion and demographic predictions from one forward pass.
-              Loads a lambda-sweep checkpoint saved by run_lambda_sweep() in
-              05_joint_multitask_and_lambda_sweep.py, for example
-              joint_model_lambda_0.1.pth. Pick the sweep point with
-              --lambda_value.
-
-  shrinkage   The paper's main demographic-conditioned Head(mode='shrinkage').
-              REQUIRES A CHECKPOINT THIS REPO DOES NOT SAVE BY DEFAULT. The
-              20-seed sweep in run_full_mode_sweep() (04) evaluates many
-              Head instances but only writes their metrics to
-              grouping_results_20seed.csv, never their weights. To use this
-              mode, train and save one yourself first, see
-              save_shrinkage_checkpoint() below, or call
-              train_one('shrinkage', seed, ...) directly from
-              04_grouping_and_shrinkage_experiments.py and
-              torch.save(model.state_dict(), your_path). This mode also
-              needs race, gender, and age group ids for the image, they are
-              NOT inferred by this script, pass them with --race/--gender/--age.
-
-USAGE
-    python inference.py --image path/to/face.jpg --mode emotion
-    python inference.py --image path/to/face.jpg --mode joint --lambda_value 0.1
-    python inference.py --image path/to/face.jpg --mode shrinkage \
-        --shrinkage_ckpt path/to/your_saved_head.pth --race 0 --gender 0 --age 2
-
-    --image also accepts a directory, every image inside it is then run.
-
-NOTE FOR REVIEWER, please check before trusting this file:
-  1. EMOTION_LABELS below is inferred from NEUTRAL_CLASS = 6 in
-     common_utils.py plus the standard 0-indexed RAF-DB basic-7 label order,
-     it is not read directly from basic/EmoLabel/list_partition_label.txt.
-     Confirm the order against that file.
-  2. RACE_LABELS and GENDER_LABELS are taken from print-statement comments
-     elsewhere in the repo (05_joint_multitask_and_lambda_sweep.py names
-     White/Black/Asian, common_utils.py comments male/female/unsure for
-     gender), not from a canonical label map. AGE group ids are left as
-     plain integers, fill in real bin edges if you want them displayed.
-  3. In the shrinkage mode, Head's ShrinkageEmbedding.counts is a registered
-     buffer, so load_state_dict() should overwrite the placeholder counts
-     this script constructs the model with, with whatever counts the
-     checkpoint was actually trained on. Please verify this is in fact
-     happening rather than assuming it, a silent mismatch here would
-     produce wrong shrinkage weights without erroring.
-"""
-
 import argparse
 import os
 
@@ -160,11 +98,6 @@ def predict_joint(model, image_path):
 
 def save_shrinkage_checkpoint(train_d, val_d, race_counts, gender_counts, age_counts,
                                class_w, out_path, seed=0):
-    """Convenience helper: trains one Head(mode='shrinkage') via train_one()
-    from 04_grouping_and_shrinkage_experiments.py and saves it, since the
-    sweep in that file does not persist individual checkpoints on its own.
-    Run this once, in an environment where 04's cached features are
-    available, then point --shrinkage_ckpt at out_path."""
     from importlib import import_module
     grouping = import_module('04_grouping_and_shrinkage_experiments')
     model = grouping.train_one('shrinkage', seed, train_d, val_d,
